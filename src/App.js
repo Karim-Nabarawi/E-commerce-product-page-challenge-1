@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import ItemDescription from "./components/ItemDescription";
+import ItemPreview from "./components/ItemPreview";
+import Navbar from "./components/Navbar";
+
+import styled from "styled-components";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <PageContainer>
+      <Navbar />
+      <ItemContainer>
+        <ItemPreview />
+        <ItemDescription />
+      </ItemContainer>
+    </PageContainer>
   );
 }
 
 export default App;
+
+const ItemContainer = styled.div`
+  margin-top: 80px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
+const PageContainer = styled.div`
+  font-family: "Kumbh Sans", sans-serif;
+  margin: 50px 15% 0px 15%;
+  color: hsl(219, 9%, 45%);
+  .title {
+    color: hsl(220, 13%, 13%);
+  }
+`;
