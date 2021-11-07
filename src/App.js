@@ -5,6 +5,7 @@ import ItemPreview from "./components/ItemPreview";
 import Navbar from "./components/Navbar";
 
 import styled from "styled-components";
+import LightBoxGallery from "./components/LightBoxGallery";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <ItemPreview />
         <ItemDescription />
       </ItemContainer>
+      <LightBoxGallery />
     </PageContainer>
   );
 }

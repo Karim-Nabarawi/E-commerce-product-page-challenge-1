@@ -9,7 +9,7 @@ import Image4 from "../images/image-product-4.jpg";
 import styled from "styled-components";
 
 const ItemPreview = () => {
-  const [currentImage, setCurrentImage] = useState(Image2);
+  const [currentImage, setCurrentImage] = useState(Image1);
   const previewImages = [Image1, Image2, Image3, Image4];
   return (
     <ImageContainer>
@@ -18,7 +18,8 @@ const ItemPreview = () => {
         {previewImages.map((img) => {
           return (
             <div className={currentImage === img ? "SelectContainer" : ""} onClick={() => setCurrentImage(img)}>
-              <span></span>
+              <span className="border"></span>
+              <span className="filter"></span>
               <img src={img} alt="Product" />
             </div>
           );
@@ -34,21 +35,6 @@ const ImageContainer = styled.div`
   text-align: center;
   img {
     border-radius: 15px;
-    border: 3px solid transparent;
-  }
-
-  .SelectContainer {
-    position: relative;
-    span {
-      border: 3px solid hsl(26, 100%, 55%);
-      border-radius: 15px;
-      position: absolute;
-      width: 90px;
-      height: 90px;
-    }
-    img {
-      opacity: 50%;
-    }
   }
 `;
 
@@ -65,8 +51,36 @@ const ItemPreviewContainer = styled.div`
   margin: auto;
   img {
     width: 90px;
+    cursor: pointer;
     &:hover {
       opacity: 50%;
+    }
+  }
+
+  span {
+    position: absolute;
+    border-radius: 15px;
+    width: 85px;
+    height: 85px;
+    content: "";
+    background-color: transparent;
+    border: 3px solid transparent;
+    opacity: 75%;
+  }
+
+  .filter {
+    &:hover {
+      background-color: white;
+    }
+  }
+
+  .SelectContainer {
+    position: relative;
+    span {
+      border-color: hsl(26, 100%, 55%);
+    }
+    .filter {
+      background-color: white;
     }
   }
 `;

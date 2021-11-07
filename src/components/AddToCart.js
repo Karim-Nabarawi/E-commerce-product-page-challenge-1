@@ -45,6 +45,10 @@ const ItemCountContainer = styled.div`
     color: hsl(26, 100%, 55%);
     font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    &:hover {
+      opacity: 50%;
+    }
   }
 
   .itemCount {
@@ -66,6 +70,7 @@ const ButtonContainer = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   .cartIcon {
     margin-right: 20px;
   }
