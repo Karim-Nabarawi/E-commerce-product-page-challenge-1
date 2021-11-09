@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Image1 from "../images/image-product-1.jpg";
 import Image2 from "../images/image-product-2.jpg";
@@ -7,17 +8,27 @@ import Image4 from "../images/image-product-4.jpg";
 
 //Styling and Animation
 import styled from "styled-components";
+import { toggleLightBoxHidden } from "../actions/lightBoxAction";
 
 const ItemPreview = () => {
   const [currentImage, setCurrentImage] = useState(Image1);
   const previewImages = [Image1, Image2, Image3, Image4];
+
+  const dispatch = useDispatch();
+  const showLightBox = () => {
+    dispatch(toggleLightBoxHidden());
+  };
   return (
     <ImageContainer>
-      <DisplayImage src={currentImage} alt="Product 1" />
+      <DisplayImage src={currentImage} alt="Product 1" onClick={showLightBox} />
       <ItemPreviewContainer>
-        {previewImages.map((img) => {
+        {previewImages.map((img, index) => {
           return (
-            <div className={currentImage === img ? "SelectContainer" : ""} onClick={() => setCurrentImage(img)}>
+            <div
+              className={currentImage === img ? "SelectContainer" : ""}
+              onClick={() => setCurrentImage(img)}
+              key={index}
+            >
               <span className="border"></span>
               <span className="filter"></span>
               <img src={img} alt="Product" />

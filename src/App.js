@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import ItemDescription from "./components/ItemDescription";
 import ItemPreview from "./components/ItemPreview";
@@ -8,6 +9,7 @@ import styled from "styled-components";
 import LightBoxGallery from "./components/LightBoxGallery";
 
 function App() {
+  const { hidden } = useSelector((state) => state.lightBox);
   return (
     <PageContainer>
       <Navbar />
@@ -15,7 +17,7 @@ function App() {
         <ItemPreview />
         <ItemDescription />
       </ItemContainer>
-      <LightBoxGallery />
+      {!hidden && <LightBoxGallery />}
     </PageContainer>
   );
 }

@@ -6,14 +6,22 @@ import { ReactComponent as Close } from "../images/icon-close.svg";
 
 //Styling and Animation
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { toggleLightBoxHidden } from "../actions/lightBoxAction";
 
 const LightBoxGallery = () => {
+  const dispatch = useDispatch();
+  const CloseLightBox = () => {
+    console.log("in");
+    dispatch(toggleLightBoxHidden());
+  };
+
   return (
     <LightBoxContainer>
       <div className="background"></div>
       <div className="gallery">
         <div className="close-icon">
-          <Close className="close" />
+          <Close className="close" onClick={CloseLightBox} />
         </div>
         <ItemPreview />
       </div>
@@ -46,8 +54,10 @@ const LightBoxContainer = styled.div`
     .close-icon {
       text-align: end;
       padding-bottom: 25px;
-      cursor: pointer;
     }
+  }
+  .close {
+    cursor: pointer;
   }
   .close path {
     fill: white;

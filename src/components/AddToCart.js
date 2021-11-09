@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { ReactComponent as CartIcon } from "../images/icon-cart.svg";
+import { ReactComponent as MinusIcon } from "../images/icon-minus.svg";
+import { ReactComponent as PlusIcon } from "../images/icon-plus.svg";
 
 //Styling and Animation
 import styled from "styled-components";
 
 const AddToCart = () => {
+  const [cartCount, setCartCount] = useState(0);
+
+  const changeCartCount = (value) => {
+    setCartCount(value + cartCount < 0 ? 0 : value + cartCount);
+  };
+
   return (
     <AddToCartContainer>
       <ItemCountContainer>
-        <span className="itemButton">-</span>
-        <span className="itemCount">3</span>
-        <span className="itemButton">+</span>
+        <MinusIcon className="itemButton" onClick={() => changeCartCount(-1)} />
+        <span className="itemCount">{cartCount}</span>
+        <PlusIcon className="itemButton" onClick={() => changeCartCount(1)} />
       </ItemCountContainer>
       <ButtonContainer>
         <CartIcon className="cartIcon" alt="cart icon" />
@@ -46,6 +54,8 @@ const ItemCountContainer = styled.div`
     font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
     cursor: pointer;
+    margin: 0px 15px;
+    user-select: none;
     &:hover {
       opacity: 50%;
     }
