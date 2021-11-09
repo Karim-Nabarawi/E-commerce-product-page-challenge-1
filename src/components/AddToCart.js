@@ -11,7 +11,7 @@ const AddToCart = () => {
   const [cartCount, setCartCount] = useState(0);
 
   const changeCartCount = (value) => {
-    setCartCount(value + cartCount < 0 ? 0 : value + cartCount);
+    setCartCount(value + cartCount < 1 ? 1 : value + cartCount);
   };
 
   return (

@@ -1,14 +1,22 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import CartIcon from "../images/icon-cart.svg";
+import { ReactComponent as CartIcon } from "../images/icon-cart.svg";
 import ProfileIcon from "../images/image-avatar.png";
 
 import Logo from "../images/logo.svg";
 
 //Styling and Animation
 import styled from "styled-components";
+import CartDropdown from "./CartDropdown";
+import { toggleCartHidden } from "../actions/cartAction";
 
 const Navbar = () => {
+  const { hidden } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const toggleCart = () => {
+    dispatch(toggleCartHidden());
+  };
   return (
     <Nav>
       <div>
@@ -32,9 +40,10 @@ const Navbar = () => {
         </NavBody>
       </div>
       <NavFooter>
-        <li>
-          <img src={CartIcon} alt="Cart icon" />
-        </li>
+        <NavCart hidden={hidden}>
+          <CartIcon className="cart-icon" onClick={toggleCart} />
+          {!hidden && <CartDropdown />}
+        </NavCart>
         <li>
           <img src={ProfileIcon} className="profile" alt="Profile" />
         </li>
@@ -93,5 +102,12 @@ const NavFooter = styled.ul`
     &:hover {
       border-color: hsl(26, 100%, 55%);
     }
+  }
+`;
+
+const NavCart = styled.li`
+  position: relative;
+  .cart-icon path {
+    fill: ${(props) => (!props.hidden ? "hsl(220,13%,13%)" : "")};
   }
 `;
