@@ -15,7 +15,7 @@ const CartItem = ({ data }) => {
           <b> ${data.price * data.quantity}.00</b>
         </p>
       </div>
-      <DeletIcon />
+      <DeletIcon className="deleteIcon" />
     </Item>
   );
 };
@@ -39,5 +39,14 @@ const Item = styled.div`
   }
   p {
     margin: 0;
+  }
+
+  .deleteIcon {
+    &:hover {
+      use {
+        fill: hsl(220, 13%, 13%);
+      }
+    }
+    cursor: pointer;
   }
 `;

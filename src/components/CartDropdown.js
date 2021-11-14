@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 //Styling and Animation
@@ -10,16 +10,22 @@ import CustomeButton from "./CustomeButton";
 
 const CartDropdown = () => {
   const data = useSelector((state) => state.cart);
+  const [isCartEmpty, setIsCartEmpty] = useState(true);
+  useEffect(() => setIsCartEmpty(!(data.items && data.items.length > 0)), [data.items]);
   return (
     <CartDropdownContainer>
       <div className="title">
         <h3>Cart</h3>
       </div>
-      <CartItems content={true}>
+      <CartItems content={isCartEmpty}>
         {/* <span className="empty-message">Your cart is empty</span> */}
-        {data.items && data.items.map((itemData) => <CartItem key={itemData.id} data={itemData} />)}
+        {data.items && data.items.length > 0 ? (
+          data.items.map((itemData) => <CartItem key={itemData.id} data={itemData} />)
+        ) : (
+          <span className="empty-message">Your cart is empty</span>
+        )}
       </CartItems>
-      <CustomeButton specialStyle={{ margin: "20px" }}>Checkout</CustomeButton>
+      {!isCartEmpty && <CustomeButton specialStyle={{ margin: "20px" }}>Checkout</CustomeButton>}
     </CartDropdownContainer>
   );
 };
@@ -76,7 +82,7 @@ const CartItems = styled.div`
   flex-direction: column;
   overflow: auto;
   overflow-x: hidden;
-  justify-content: ${(props) => (props.content ? "flex-start" : "center")};
+  justify-content: ${(props) => (props.content ? "center" : "flex-start")};
 
   .empty-message {
     font-size: 16px;
