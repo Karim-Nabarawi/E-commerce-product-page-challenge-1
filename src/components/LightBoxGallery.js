@@ -12,7 +12,6 @@ import { toggleLightBoxHidden } from "../actions/lightBoxAction";
 const LightBoxGallery = () => {
   const dispatch = useDispatch();
   const CloseLightBox = () => {
-    console.log("in");
     dispatch(toggleLightBoxHidden());
   };
 

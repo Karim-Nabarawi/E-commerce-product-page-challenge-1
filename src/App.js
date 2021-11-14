@@ -1,14 +1,26 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+//Actions
+import { setItem } from "./actions/itemAction";
+
+//data
+import { items } from "./data.js";
+
+//Components
 import ItemDescription from "./components/ItemDescription";
 import ItemPreview from "./components/ItemPreview";
 import Navbar from "./components/Navbar";
-
-import styled from "styled-components";
 import LightBoxGallery from "./components/LightBoxGallery";
 
+//Stylying
+import styled from "styled-components";
+
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setItem(items[0]));
+  }, [dispatch]);
   const { hidden } = useSelector((state) => state.lightBox);
   return (
     <PageContainer>

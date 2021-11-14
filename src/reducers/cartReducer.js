@@ -1,5 +1,5 @@
 const initState = {
-  hidden: true,
+  hiddenCart: true,
   items: [],
   itemCount: 0,
 };
@@ -9,14 +9,18 @@ const cartReducer = (state = initState, action) => {
     case "TOGGLE_CART_HIDDEN":
       return {
         ...state,
-        hidden: !state.hidden,
+        hiddenCart: !state.hiddenCart,
       };
 
     case "ADD_CART_ITEM":
       return {
         ...state,
-        items: addItem(state.items, action.payload),
-        // itemCount: updateItemCount(state.items),
+        items: addItemToCart(state.items, action.payload),
+      };
+    case "UPADTE_CART_COUNT":
+      return {
+        ...state,
+        itemCount: updateItemCount(state.items),
       };
     default:
       return { ...state };
@@ -25,28 +29,20 @@ const cartReducer = (state = initState, action) => {
 
 export default cartReducer;
 
-const addItem = (cart, item) => {
-  const foundItem = cart.filter((cartItem) => {
-    return cartItem.id === item.id;
-  });
-  if (foundItem.length > 0) cart[0].count += item.count;
-  else cart.push(item);
-
-  return cart;
-};
-
 const addItemToCart = (cartItems, cartItemToAdd) => {
   const existingCartItem = cartItems.find((cartItem) => cartItem.id === cartItemToAdd.id);
   if (existingCartItem) {
     return cartItems.map((cartItem) =>
-      cartItem.id === cartItemToAdd.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+      cartItem.id === cartItemToAdd.id
+        ? { ...cartItem, quantity: cartItem.quantity + cartItemToAdd.quantity }
+        : cartItem
     );
   }
-  return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
+  return [...cartItems, { ...cartItemToAdd, quantity: cartItemToAdd.quantity }];
 };
 
 const updateItemCount = (cart) => {
   let count = 0;
-  cart.map((item) => (count += item.count));
+  cart.map((item) => (count += item.quantity));
   return count;
 };

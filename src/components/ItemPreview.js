@@ -1,18 +1,16 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import Image1 from "../images/image-product-1.jpg";
-import Image2 from "../images/image-product-2.jpg";
-import Image3 from "../images/image-product-3.jpg";
-import Image4 from "../images/image-product-4.jpg";
+import { toggleLightBoxHidden } from "../actions/lightBoxAction";
 
 //Styling and Animation
 import styled from "styled-components";
-import { toggleLightBoxHidden } from "../actions/lightBoxAction";
 
 const ItemPreview = () => {
-  const [currentImage, setCurrentImage] = useState(Image1);
-  const previewImages = [Image1, Image2, Image3, Image4];
+  const { images } = useSelector((state) => state.itemData);
+  const [currentImage, setCurrentImage] = useState("");
+
+  useEffect(() => setCurrentImage(images[0]), [images]);
 
   const dispatch = useDispatch();
   const showLightBox = () => {
@@ -22,7 +20,7 @@ const ItemPreview = () => {
     <ImageContainer>
       <DisplayImage src={currentImage} alt="Product 1" onClick={showLightBox} />
       <ItemPreviewContainer>
-        {previewImages.map((img, index) => {
+        {images.map((img, index) => {
           return (
             <div
               className={currentImage === img ? "SelectContainer" : ""}

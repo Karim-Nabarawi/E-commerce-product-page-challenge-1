@@ -12,16 +12,17 @@ import { toggleCartHidden } from "../actions/cartAction";
 import styled from "styled-components";
 
 const CartIconNav = () => {
-  const { hidden, items } = useSelector((state) => state.cart);
+  const { hiddenCart, itemCount } = useSelector((state) => state.cart);
+
   const dispatch = useDispatch();
   const toggleCart = () => {
     dispatch(toggleCartHidden());
   };
   return (
-    <NavCart hidden={hidden}>
+    <NavCart hiddenCart={hiddenCart}>
       <CartIcon className="cart-icon" onClick={toggleCart} />
-      {!hidden && <CartDropdown />}
-      <p className="number">3</p>
+      {!hiddenCart && <CartDropdown />}
+      {itemCount && itemCount > 0 ? <p className="number">{itemCount}</p> : ""}
     </NavCart>
   );
 };
@@ -31,7 +32,7 @@ const NavCart = styled.li`
   position: relative;
   user-select: none;
   .cart-icon path {
-    fill: ${(props) => (!props.hidden ? "hsl(220,13%,13%)" : "")};
+    fill: ${(props) => (!props.hiddenCart ? "hsl(220,13%,13%)" : "")};
   }
   .number {
     position: absolute;

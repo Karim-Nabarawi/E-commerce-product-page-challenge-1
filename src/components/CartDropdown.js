@@ -1,21 +1,25 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 //Styling and Animation
 import styled from "styled-components";
+import CartItem from "./CartItem";
+import CustomeButton from "./CustomeButton";
 
 //componenet
 
 const CartDropdown = () => {
+  const data = useSelector((state) => state.cart);
   return (
     <CartDropdownContainer>
       <div className="title">
         <h3>Cart</h3>
       </div>
-      <CartItems content={false}>
-        <span className="empty-message">Your cart is empty</span>
+      <CartItems content={true}>
+        {/* <span className="empty-message">Your cart is empty</span> */}
+        {data.items && data.items.map((itemData) => <CartItem key={itemData.id} data={itemData} />)}
       </CartItems>
-
-      {/* <CustomButton onClick={submitHandler}>GO TO CHECKOUT</CustomButton> */}
+      <CustomeButton specialStyle={{ margin: "20px" }}>Checkout</CustomeButton>
     </CartDropdownContainer>
   );
 };
@@ -34,7 +38,7 @@ const CartDropdownContainer = styled.div`
   left: 50%;
   transform: translate(-50%, 20%);
   background-color: white;
-
+  cursor: default;
   .title {
     border-bottom: 1px solid hsl(220, 14%, 75%);
   }

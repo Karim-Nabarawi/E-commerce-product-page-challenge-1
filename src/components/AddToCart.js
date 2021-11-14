@@ -6,8 +6,9 @@ import { ReactComponent as PlusIcon } from "../images/icon-plus.svg";
 
 //Styling and Animation
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../actions/cartAction";
+import CustomeButton from "./CustomeButton";
 
 const AddToCart = () => {
   const [cartCount, setCartCount] = useState(0);
@@ -15,18 +16,23 @@ const AddToCart = () => {
   const dispatch = useDispatch();
 
   const addItems = () => {
+    setCartCount(0);
     dispatch(
       addItemToCart({
-        id: 0,
-        title: "Fall Limited Edition Sneakers",
-        count: cartCount,
+        id: id,
+        title: title,
+        price: price,
+        mainImage: mainImage,
+        quantity: cartCount,
       })
     );
   };
 
   const changeCartCount = (value) => {
-    setCartCount(value + cartCount < 1 ? 1 : value + cartCount);
+    setCartCount(value + cartCount < 0 ? 0 : value + cartCount);
   };
+
+  const { id, title, price, mainImage } = useSelector((state) => state.itemData);
 
   return (
     <AddToCartContainer>
@@ -35,10 +41,10 @@ const AddToCart = () => {
         <span className="itemCount">{cartCount}</span>
         <PlusIcon className="itemButton" onClick={() => changeCartCount(1)} />
       </ItemCountContainer>
-      <ButtonContainer onClick={addItems}>
+      <CustomeButton clickFunction={addItems} specialStyle={{ marginLeft: "15px", boxShadow: "0px 25px 25px #ffe3cd" }}>
         <CartIcon className="cartIcon" alt="cart icon" />
         Add to cart
-      </ButtonContainer>
+      </CustomeButton>
     </AddToCartContainer>
   );
 };
@@ -77,31 +83,5 @@ const ItemCountContainer = styled.div`
 
   .itemCount {
     color: hsl(220, 13%, 13%);
-  }
-`;
-
-const ButtonContainer = styled.button`
-  flex: 3;
-  font-family: "Kumbh Sans", sans-serif;
-  margin-left: 15px;
-  color: white;
-  background-color: hsl(26, 100%, 55%);
-  border-radius: 10px;
-  border: none;
-  font-weight: 700;
-  font-size: 16px;
-  box-shadow: 0px 25px 25px #ffe3cd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  .cartIcon {
-    margin-right: 20px;
-  }
-  .cartIcon path {
-    fill: white;
-  }
-  &:hover {
-    opacity: 50%;
   }
 `;
