@@ -44,6 +44,7 @@ const ImageContainer = styled.div`
   text-align: center;
   img {
     border-radius: 15px;
+    cursor: pointer;
   }
 `;
 
@@ -75,6 +76,7 @@ const ItemPreviewContainer = styled.div`
     background-color: transparent;
     border: 3px solid transparent;
     opacity: 75%;
+    cursor: pointer;
   }
 
   .filter {
