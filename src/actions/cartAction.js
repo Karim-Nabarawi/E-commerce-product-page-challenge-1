@@ -3,3 +3,10 @@ export const toggleCartHidden = () => async (dispatch) => {
     type: "TOGGLE_CART_HIDDEN",
   });
 };
+
+export const addItemToCart = (data) => async (dispatch) => {
+  dispatch({
+    type: "ADD_CART_ITEM",
+    payload: data,
+  });
+};

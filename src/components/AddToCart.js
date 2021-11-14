@@ -6,9 +6,23 @@ import { ReactComponent as PlusIcon } from "../images/icon-plus.svg";
 
 //Styling and Animation
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { addItemToCart } from "../actions/cartAction";
 
 const AddToCart = () => {
   const [cartCount, setCartCount] = useState(0);
+
+  const dispatch = useDispatch();
+
+  const addItems = () => {
+    dispatch(
+      addItemToCart({
+        id: 0,
+        title: "Fall Limited Edition Sneakers",
+        count: cartCount,
+      })
+    );
+  };
 
   const changeCartCount = (value) => {
     setCartCount(value + cartCount < 1 ? 1 : value + cartCount);
@@ -21,7 +35,7 @@ const AddToCart = () => {
         <span className="itemCount">{cartCount}</span>
         <PlusIcon className="itemButton" onClick={() => changeCartCount(1)} />
       </ItemCountContainer>
-      <ButtonContainer>
+      <ButtonContainer onClick={addItems}>
         <CartIcon className="cartIcon" alt="cart icon" />
         Add to cart
       </ButtonContainer>
