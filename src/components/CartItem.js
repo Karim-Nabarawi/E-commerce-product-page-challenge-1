@@ -3,8 +3,14 @@ import React from "react";
 import { ReactComponent as DeletIcon } from "../images/icon-delete.svg";
 
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { removeItemFromCart } from "../actions/cartAction";
 
 const CartItem = ({ data }) => {
+  const dispatch = useDispatch();
+  const deleteData = () => {
+    dispatch(removeItemFromCart(data));
+  };
   return (
     <Item>
       <img src={data.mainImage} alt="" />
@@ -15,7 +21,7 @@ const CartItem = ({ data }) => {
           <b> ${data.price * data.quantity}.00</b>
         </p>
       </div>
-      <DeletIcon className="deleteIcon" />
+      <DeletIcon className="deleteIcon" onClick={deleteData} />
     </Item>
   );
 };

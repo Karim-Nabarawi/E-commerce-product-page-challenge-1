@@ -22,7 +22,9 @@ const LightBoxGallery = () => {
         <div className="close-icon">
           <Close className="close" onClick={CloseLightBox} />
         </div>
-        <ItemPreview />
+        <div className="ImageContainer">
+          <ItemPreview />
+        </div>
       </div>
     </LightBoxContainer>
   );
@@ -63,5 +65,9 @@ const LightBoxContainer = styled.div`
     &:hover {
       fill: hsl(26, 100%, 55%);
     }
+  }
+
+  .ImageContainer {
+    display: relative;
   }
 `;

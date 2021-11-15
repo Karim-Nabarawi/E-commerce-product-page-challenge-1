@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { toggleLightBoxHidden } from "../actions/lightBoxAction";
 
+import { ReactComponent as Previous } from "../images/icon-previous.svg";
+import { ReactComponent as Next } from "../images/icon-next.svg";
+
 //Styling and Animation
 import styled from "styled-components";
 
@@ -18,7 +21,13 @@ const ItemPreview = () => {
   };
   return (
     <ImageContainer>
-      <DisplayImage src={currentImage} alt="Product 1" onClick={showLightBox} />
+      <MainImageContainer>
+        <div className="btn previousBtn">
+          <Previous className="" />
+        </div>
+        <DisplayImage src={currentImage} alt="Product 1" onClick={showLightBox} />
+        <Next className="btn nextBtn" />
+      </MainImageContainer>
       <ItemPreviewContainer>
         {images.map((img, index) => {
           return (
@@ -48,9 +57,24 @@ const ImageContainer = styled.div`
   }
 `;
 
+const MainImageContainer = styled.div`
+  position: relative;
+  margin-bottom: 20px;
+  .btn {
+    position: absolute;
+    background-color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 120px;
+  }
+  .previousBtn {
+    top: 50%;
+    transform: translate(-5 px, -20 px);
+  }
+`;
+
 const DisplayImage = styled.img`
   width: 450px;
-  margin-bottom: 20px;
 `;
 
 const ItemPreviewContainer = styled.div`

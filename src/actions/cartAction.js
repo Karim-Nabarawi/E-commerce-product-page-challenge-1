@@ -17,3 +17,11 @@ export const updateItemCount = () => async (dispatch) => {
     type: "UPADTE_CART_COUNT",
   });
 };
+
+export const removeItemFromCart = (item) => async (dispatch) => {
+  dispatch({
+    type: "REMOVE_CLEAR_ITEM",
+    payload: item,
+  });
+  dispatch(updateItemCount());
+};
