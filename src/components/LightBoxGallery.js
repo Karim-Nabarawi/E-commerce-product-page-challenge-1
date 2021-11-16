@@ -23,7 +23,7 @@ const LightBoxGallery = () => {
           <Close className="close" onClick={CloseLightBox} />
         </div>
         <div className="ImageContainer">
-          <ItemPreview />
+          <ItemPreview isLightBox={true} />
         </div>
       </div>
     </LightBoxContainer>

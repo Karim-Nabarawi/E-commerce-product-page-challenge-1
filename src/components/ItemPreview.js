@@ -9,31 +9,44 @@ import { ReactComponent as Next } from "../images/icon-next.svg";
 //Styling and Animation
 import styled from "styled-components";
 
-const ItemPreview = () => {
+const ItemPreview = ({ isLightBox = false }) => {
   const { images } = useSelector((state) => state.itemData);
-  const [currentImage, setCurrentImage] = useState("");
+  const [currentImage, setCurrentImage] = useState(null);
 
-  useEffect(() => setCurrentImage(images[0]), [images]);
+  useEffect(() => setCurrentImage(0), [images]);
 
   const dispatch = useDispatch();
   const showLightBox = () => {
     dispatch(toggleLightBoxHidden());
   };
+
+  const btnClick = (direction) => {
+    setCurrentImage(
+      direction + currentImage < 0
+        ? images.length - 1
+        : direction + currentImage > images.length - 1
+        ? 0
+        : direction + currentImage
+    );
+  };
+
   return (
     <ImageContainer>
-      <MainImageContainer>
-        <div className="btn previousBtn">
-          <Previous className="" />
+      <MainImageContainer isLightBox={isLightBox}>
+        <div className="btn previousBtn" onClick={() => btnClick(-1)}>
+          <Previous />
         </div>
-        <DisplayImage src={currentImage} alt="Product 1" onClick={showLightBox} />
-        <Next className="btn nextBtn" />
+        <DisplayImage src={images[currentImage]} alt="Product 1" onClick={showLightBox} />
+        <div className="btn nextBtn" onClick={() => btnClick(1)}>
+          <Next />
+        </div>
       </MainImageContainer>
       <ItemPreviewContainer>
         {images.map((img, index) => {
           return (
             <div
-              className={currentImage === img ? "SelectContainer" : ""}
-              onClick={() => setCurrentImage(img)}
+              className={images[currentImage] === img ? "SelectContainer" : ""}
+              onClick={() => setCurrentImage(index)}
               key={index}
             >
               <span className="border"></span>
@@ -60,15 +73,35 @@ const ImageContainer = styled.div`
 const MainImageContainer = styled.div`
   position: relative;
   margin-bottom: 20px;
+  img {
+    cursor: ${(props) => (props.isLightBox ? "default" : "pointer")};
+  }
   .btn {
     position: absolute;
+    user-select: none;
     background-color: white;
     width: 50px;
     height: 50px;
     border-radius: 120px;
+    display: ${(props) => (props.isLightBox ? "flex" : "none")};
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:hover {
+      path {
+        stroke: hsl(26, 100%, 55%);
+      }
+    }
   }
   .previousBtn {
     top: 50%;
+    left: -5%;
+    transform: translate(-5 px, -20 px);
+  }
+
+  .nextBtn {
+    top: 50%;
+    right: -5%;
     transform: translate(-5 px, -20 px);
   }
 `;
